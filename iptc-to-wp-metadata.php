@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: IPCT to Wordpress Metadata
- * Plugin URI: n/a
- * Description: A plugin to autopopulate the "Description" field for image media with the "Keywords" field from IPCT metadata
+ * Plugin Name: IPTC to Wordpress Metadata
+ * Plugin URI: https://github.com/johnhungerford/iptc-to-wp-metadata
+ * Description: A Wordpress plugin to autopopulate the "Description" and "Title" fields for image media with the "Keywords" field from IPTC metadata
  * Version: 1.0
  * Author: John Hungerford
- * Author URI: n/a
+ * Author URI: https://github.com/johnhungerford
  */
 
 add_action( 'add_attachment', 'populate_img_desc_iptc_keywords');
