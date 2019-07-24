@@ -19,6 +19,7 @@ function populate_img_desc_iptc_keywords($attachment_id) {
     
     // Only try to update WP metadata if 'Keywords' IPTC key ('2#025') is present
     if( isset( $iptc['2#025'] ) && is_array( $iptc['2#025'] ) ) {
+        echo '<script>console.log("Found keywords in image!")</script>';
         // Generate string from array of keywords, space-separated
         $keywords_string = implode(' ', $iptc['2#025']);
         $new_image_meta = array(
@@ -26,6 +27,8 @@ function populate_img_desc_iptc_keywords($attachment_id) {
 			'post_title'	=> $keywords_string,	// Set image Title to string of keywords
 			'post_content'	=> $keywords_string,	// Set image Description (Content) to string of keywords
         );
+
+        echo "<script>console.log('" . json_encode($new_image_meta) . "');</script>";
         
         wp_update_post( $new_image_meta );
    }
