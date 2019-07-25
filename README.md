@@ -2,7 +2,7 @@
 
 This is a Wordpress plugin that automatically populates the "Description" field of an image with IPTC keywords when the image is uploaded to the media library. It is an easy way to make your media library searchable by embedded keywords, which can either be IPTC or XMP (from what I can tell, these work in basically the same way, at least when it comes to keywords).
 
-It works by using php's builtin iptcparse function to parse data pulled php's builtin get_image_size function. If that doesn't work (for instance, when IPTC keywords are stored in the XMP slot and EXIF data is also present, php cannot find the IPTC data) it simply searches the file for xml encoded keyword tags (xmp format).
+It works by using php's built-in `iptcparse` function to parse data pulled php's built-in `getimagesize` function. If that doesn't work (for instance, when IPTC keywords are stored in the XMP slot and EXIF data is also present, php cannot find the IPTC data) it simply searches the file for xml encoded keyword tags (xmp format).
 
 This plugin currently supports .jpg and .tif files (although the latter are not typically used on wordpress) but not .png, which has little standardization for metadata embedding.
 
