@@ -1,0 +1,3 @@
+#!/bin/bash
+rm iptc-to-wp-metadata.zip
+zip -r iptc-to-wp-metadata.zip iptc-to-wp-metadata.php
