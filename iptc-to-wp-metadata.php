@@ -50,16 +50,20 @@ function populate_img_desc_iptc_keywords($attachment_id) {
                 // Initialize empty array to store keywords
                 $keys = Array();
 
-                // For loop stores each keyword and searches for next xml keyword tag
+                // While loop stores each keyword and searches for next xml keyword tag
                 while($ctr != FALSE && $ctr < $key_data_length) {
+                    // Skip past the tag to get the keyword itself
                     $ctr += 8;
+
+                    // Keyword ends where closing tag begins
                     $endpos = strpos($key_data, '</rdf:li>', $ctr);
-
-                    // Exit if no closing tag is found
                     if ($endpos == FALSE) break;
-
+                    
+                    // Add keyword to keyword array
                     array_push($keys, substr($key_data, $ctr, $endpos - $ctr));
-                    $ctr = $endpos + 10;
+                
+                    // Find next keyword open tag
+                    $ctr = strpos($key_data, '<rdf:li>', $endpos);
                 }
             }
         } 
