@@ -53,17 +53,23 @@ function populate_img_desc_iptc_keywords($attachment_id) {
                 // While loop stores each keyword and searches for next xml keyword tag
                 while($ctr != FALSE && $ctr < $key_data_length) {
                     // Skip past the tag to get the keyword itself
-                    $ctr += 8;
+                    $key_begin = $ctr + 8;
 
                     // Keyword ends where closing tag begins
-                    $endpos = strpos($key_data, '</rdf:li>', $ctr);
-                    if ($endpos == FALSE) break;
+                    $key_end = strpos($key_data, '</rdf:li>', $key_begin);
+
+                    // Make sure keyword has a closing tag
+                    if ($key_end == FALSE) break;
                     
+                    // Make sure keyword is not too long (not sure what WP can handle)
+                    $key_length = $key_end - $key_begin;
+                    $key_length = (100 < $key_length ? 100 : $key_length);
+
                     // Add keyword to keyword array
-                    array_push($keys, substr($key_data, $ctr, $endpos - $ctr));
+                    array_push($keys, substr($key_data, $key_begin, $key_length));
                 
                     // Find next keyword open tag
-                    $ctr = strpos($key_data, '<rdf:li>', $endpos);
+                    $ctr = strpos($key_data, '<rdf:li>', $key_end);
                 }
             }
         } 
@@ -71,13 +77,17 @@ function populate_img_desc_iptc_keywords($attachment_id) {
 
     // If above code generated an array of keywords ($keys), enter these into wordpress meta
     if (isset($keys) && sizeof($keys) > 0) {
-        $keywords_string = implode(' ', $keys);
+        $keywords_string = implode(', ', $keys);
+
+        // Let's make sure title string is 150 characters or less, and ends with a complete keyword
+        $title_string = (strlen($keywords_string) < 150 ? $keywords_string : substr($keywords_string, 0, strrpos(substr($keywords_string, 0, 150), ', ')));
+
         $new_image_meta = array(
             'ID'		    => $attachment_id,		// Specify the image (ID) to be updated
-            'post_title'	=> $keywords_string,	// Set image Title to string of keywords
+            'post_title'	=> $title_string,	    // Set image Title to string of keywords
             'post_content'	=> $keywords_string,	// Set image Description (Content) to string of keywords
         );
 
-        wp_update_post( $new_image_meta );
+        wp_update_post($new_image_meta);
     } 
 }
