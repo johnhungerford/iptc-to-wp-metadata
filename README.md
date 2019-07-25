@@ -1,4 +1,4 @@
-# iptc-to-wp-metadata
+# IPTC to Wordpress Metadata
 
 This is a Wordpress plugin that automatically populates the "Description" field of an image with IPTC keywords when the image is uploaded to the media library. It is an easy way to make your media library searchable by embedded keywords, which can either be IPTC or XMP (from what I can tell, these work in basically the same way, at least when it comes to keywords).
 
